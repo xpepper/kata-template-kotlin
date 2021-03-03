@@ -14,7 +14,12 @@ class Character {
     }
 
     fun heal(target: Character, healingAmount: Int) {
-        target.health = min(target.health + healingAmount, INITIAL_HEALTH)
+        if (!target.isDead)
+            target.restoreHealth(healingAmount)
+    }
+
+    private fun restoreHealth(healingAmount: Int) {
+        health = min(health + healingAmount, INITIAL_HEALTH)
     }
 
     companion object {

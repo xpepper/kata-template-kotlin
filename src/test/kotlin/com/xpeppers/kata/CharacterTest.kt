@@ -42,4 +42,13 @@ class CharacterTest {
 
         assertThat(target.health).isEqualTo(initialTargetHealth)
     }
+
+    @Test
+    fun `dead characters cannot be healed`() {
+        character.dealDamageTo(target, target.health)
+
+        character.heal(target, 1)
+
+        assertThat(target.isDead).isTrue()
+    }
 }
