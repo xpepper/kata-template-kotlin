@@ -24,6 +24,7 @@ class Character(private val level: Int = 1) {
     private fun computeActualDamage(damage: Int, target: Character): Int {
         return when {
             target.level - level >= 5 -> damage / 2
+            level - target.level >= 5 -> damage + damage / 2
             else -> damage
         }
     }
