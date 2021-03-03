@@ -60,4 +60,15 @@ class CharacterTest {
 
         assertThat(character.health).isEqualTo(initialHealth)
     }
+
+    @Test
+    fun `if the target is 5 or more levels above the attacker, damage is reduced by 50%`() {
+        val attacker = Character(1)
+        val target = Character(6)
+        val targetInitialHealth = target.health
+
+        attacker.dealDamageTo(target, 100)
+
+        assertThat(target.health).isEqualTo(targetInitialHealth - 50)
+    }
 }
