@@ -51,4 +51,13 @@ class CharacterTest {
 
         assertThat(target.isDead).isTrue()
     }
+
+    @Test
+    fun `a Character cannot deal damage to itself`() {
+        val initialHealth = character.health
+
+        character.dealDamageTo(character, 1)
+
+        assertThat(character.health).isEqualTo(initialHealth)
+    }
 }

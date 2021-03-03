@@ -10,12 +10,17 @@ class Character {
         private set
 
     fun dealDamageTo(target: Character, damage: Int) {
-        target.health -= min(damage, target.health)
+        if (target != this)
+            target.receiveDamage(damage)
     }
 
     fun heal(target: Character, healingAmount: Int) {
         if (!target.isDead)
             target.restoreHealth(healingAmount)
+    }
+
+    private fun receiveDamage(damage: Int) {
+        health -= min(damage, health)
     }
 
     private fun restoreHealth(healingAmount: Int) {
