@@ -25,11 +25,11 @@ class CharacterTest {
     }
 
     @Test
-    fun `a Character can heal a Character`() {
+    fun `a Character can heal itself`() {
         character.dealDamageTo(target, 100)
         val targetHealthBefore = target.health
 
-        character.heal(target, 50)
+        target.heal(50)
 
         assertThat(target.health).isEqualTo(targetHealthBefore + 50)
     }
@@ -38,16 +38,16 @@ class CharacterTest {
     fun `healing cannot raise health above initial health`() {
         val initialTargetHealth = target.health
 
-        character.heal(target, 50)
+        target.heal(50)
 
         assertThat(target.health).isEqualTo(initialTargetHealth)
     }
 
     @Test
-    fun `dead characters cannot be healed`() {
+    fun `dead characters cannot heal themselves`() {
         character.dealDamageTo(target, target.health)
 
-        character.heal(target, 1)
+        target.heal(1)
 
         assertThat(target.isDead).isTrue()
     }

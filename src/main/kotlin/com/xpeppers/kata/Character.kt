@@ -14,9 +14,9 @@ class Character {
             target.receiveDamage(damage)
     }
 
-    fun heal(target: Character, healingAmount: Int) {
-        if (!target.isDead)
-            target.restoreHealth(healingAmount)
+    fun heal(healingAmount: Int) {
+        if (!isDead)
+            restoreHealth(healingAmount)
     }
 
     private fun receiveDamage(damage: Int) {
