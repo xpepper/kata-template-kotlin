@@ -82,4 +82,14 @@ class CharacterTest {
 
         assertThat(target.health).isEqualTo(targetInitialHealth - 150)
     }
+
+    @Test
+    fun `a Character cannot deal damage to an out-of-range target`() {
+        val attacker = Character(maxAttackRange = 10)
+        val targetInitialHealth = target.health
+
+        attacker.dealDamageTo(target, 100, 11)
+
+        assertThat(target.health).isEqualTo(targetInitialHealth)
+    }
 }

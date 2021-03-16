@@ -2,19 +2,21 @@ package com.xpeppers.kata
 
 import kotlin.math.min
 
-class Character(private val level: Int = 1) {
+class Character(private val level: Int = 1, private val maxAttackRange: Int = 0) {
     val isDead
         get() = health == 0
 
     var health = INITIAL_HEALTH
         private set
 
-    fun dealDamageTo(target: Character, damage: Int) {
-        if (target != this) {
+    fun dealDamageTo(target: Character, damage: Int, distanceFromTarget: Int = 0) {
+        if (target != this && isTargetInRange(distanceFromTarget)) {
             val actualDamage = computeActualDamage(damage, target)
             target.receiveDamage(actualDamage)
         }
     }
+
+    private fun isTargetInRange(distanceFromTarget: Int) = distanceFromTarget <= maxAttackRange
 
     fun heal(healingAmount: Int) {
         if (!isDead)
