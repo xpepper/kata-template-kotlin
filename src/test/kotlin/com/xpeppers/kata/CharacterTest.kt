@@ -92,4 +92,16 @@ class CharacterTest {
 
         assertThat(target.health).isEqualTo(targetInitialHealth)
     }
+
+    @Test
+    fun `Melee characters have an attack range of 2 meters`() {
+        val attacker = Character.melee()
+        val targetInitialHealth = target.health
+
+        attacker.dealDamageTo(target, 100, 3)
+        assertThat(target.health).isEqualTo(targetInitialHealth)
+
+        attacker.dealDamageTo(target, 100, 2)
+        assertThat(target.health).isEqualTo(targetInitialHealth - 100)
+    }
 }
