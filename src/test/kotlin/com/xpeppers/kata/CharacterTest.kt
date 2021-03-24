@@ -27,20 +27,13 @@ class CharacterTest {
     @Test
     fun `a Character can heal itself`() {
         character.dealDamageTo(target, 100)
-        val targetHealthBefore = target.health
 
-        target.heal(50)
-
-        assertThat(target.health).isEqualTo(targetHealthBefore + 50)
+        action { target.heal(50) }.increasesBy(50) { target.health }
     }
 
     @Test
     fun `healing cannot raise health above initial health`() {
-        val initialTargetHealth = target.health
-
-        target.heal(50)
-
-        assertThat(target.health).isEqualTo(initialTargetHealth)
+        action { target.heal(50) }.doesNotChange { target.health }
     }
 
     @Test
