@@ -9,11 +9,7 @@ class CharacterTest {
 
     @Test
     fun `Characters can deal damage to Characters`() {
-        val initialTargetHealth = target.health
-
-        character.dealDamageTo(target, 100)
-
-        assertThat(target.health).isEqualTo(initialTargetHealth - 100)
+        action { character.dealDamageTo(target, 100) }.decreasesBy(100) { target.health }
     }
 
     @Test
@@ -47,66 +43,47 @@ class CharacterTest {
 
     @Test
     fun `a Character cannot deal damage to itself`() {
-        val initialHealth = character.health
-
-        character.dealDamageTo(character, 1)
-
-        assertThat(character.health).isEqualTo(initialHealth)
+        action { character.dealDamageTo(character, 1) }.doesNotChange { character.health }
     }
 
     @Test
     fun `if the target is 5 or more levels above the attacker, damage is reduced by 50%`() {
         val attacker = Character(1)
         val target = Character(6)
-        val targetInitialHealth = target.health
 
-        attacker.dealDamageTo(target, 100)
-
-        assertThat(target.health).isEqualTo(targetInitialHealth - 50)
+        action { attacker.dealDamageTo(target, 100) }.decreasesBy(50) { target.health }
     }
 
     @Test
     fun `if the target is 5 or more levels below the attacker, damage is increased by 50%`() {
         val attacker = Character(6)
         val target = Character(1)
-        val targetInitialHealth = target.health
 
-        attacker.dealDamageTo(target, 100)
-
-        assertThat(target.health).isEqualTo(targetInitialHealth - 150)
+        action { attacker.dealDamageTo(target, 100) }.decreasesBy(150) { target.health }
     }
 
     @Test
     fun `a Character cannot deal damage to an out-of-range target`() {
         val attacker = Character(maxAttackRange = 10)
-        val targetInitialHealth = target.health
 
-        attacker.dealDamageTo(target, 100, 11)
-
-        assertThat(target.health).isEqualTo(targetInitialHealth)
+        action { attacker.dealDamageTo(target, 100, 11) }.doesNotChange { target.health }
     }
 
     @Test
     fun `Melee characters have an attack range of 2 meters`() {
         val attacker = Character.melee()
-        val targetInitialHealth = target.health
 
-        attacker.dealDamageTo(target, 100, 3)
-        assertThat(target.health).isEqualTo(targetInitialHealth)
+        action { attacker.dealDamageTo(target, 100, 3) }.doesNotChange { target.health }
 
-        attacker.dealDamageTo(target, 100, 2)
-        assertThat(target.health).isEqualTo(targetInitialHealth - 100)
+        action { attacker.dealDamageTo(target, 100, 2) }.decreasesBy(100) { target.health }
     }
 
     @Test
     fun `Ranged characters have an attack range of 20 meters`() {
         val attacker = Character.ranged()
-        val targetInitialHealth = target.health
 
-        attacker.dealDamageTo(target, 100, 21)
-        assertThat(target.health).isEqualTo(targetInitialHealth)
+        action { attacker.dealDamageTo(target, 100, 21) }.doesNotChange { target.health }
 
-        attacker.dealDamageTo(target, 100, 20)
-        assertThat(target.health).isEqualTo(targetInitialHealth - 100)
+        action { attacker.dealDamageTo(target, 100, 20) }.decreasesBy(100) { target.health }
     }
 }
