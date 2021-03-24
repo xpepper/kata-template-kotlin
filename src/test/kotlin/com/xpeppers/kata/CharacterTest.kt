@@ -104,4 +104,16 @@ class CharacterTest {
         attacker.dealDamageTo(target, 100, 2)
         assertThat(target.health).isEqualTo(targetInitialHealth - 100)
     }
+
+    @Test
+    fun `Ranged characters have an attack range of 20 meters`() {
+        val attacker = Character.ranged()
+        val targetInitialHealth = target.health
+
+        attacker.dealDamageTo(target, 100, 21)
+        assertThat(target.health).isEqualTo(targetInitialHealth)
+
+        attacker.dealDamageTo(target, 100, 20)
+        assertThat(target.health).isEqualTo(targetInitialHealth - 100)
+    }
 }

@@ -41,6 +41,7 @@ class Character(private val level: Int = 1, private val maxAttackRange: Int = 0)
 
     companion object {
         fun melee(level: Int = 1): Character = Character(level, maxAttackRange = 2)
+        fun ranged(level: Int = 1): Character = Character(level, maxAttackRange = 20)
 
         private const val INITIAL_HEALTH = 1000
     }
