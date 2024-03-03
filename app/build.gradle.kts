@@ -9,13 +9,13 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.guava)
+
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testImplementation(libs.junit.jupiter.engine)
+    testImplementation(libs.kotest)
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-    // This dependency is used by the application.
-    implementation(libs.guava)
 }
 
 java {
